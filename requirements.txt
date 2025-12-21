@@ -1,0 +1,25 @@
+# Core scientific stack
+numpy>=1.23
+pandas>=1.5
+
+# Visualization
+matplotlib>=3.6
+seaborn>=0.12
+
+# Machine Learning
+scikit-learn>=1.2
+
+# Imbalanced data handling
+imbalanced-learn>=0.10
+
+# Gradient boosting / ensemble models
+xgboost>=1.7
+lightgbm>=3.3
+
+# Model explainability
+shap>=0.42
+
+# Jupyter environment
+jupyter>=1.0
+notebook>=6.5
+ipykernel>=6.20
