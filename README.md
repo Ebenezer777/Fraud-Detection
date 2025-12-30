@@ -1,136 +1,107 @@
-Fraud Detection Project — Adey Innovations Inc.
-1. Project Overview
+# Fraud Detection: E-commerce & Bank Transactions
 
-This project aims to improve fraud detection for e-commerce and bank credit transactions using machine learning. It focuses on detecting fraudulent transactions accurately while balancing false positives and false negatives. The project uses transaction patterns, geolocation analysis, and time-based features to improve detection performance.
+## Project Overview
+This project focuses on improving the detection of fraudulent transactions for both e-commerce and bank credit datasets. By combining advanced machine learning models, feature engineering, and explainable AI techniques, the project aims to:
 
-2. Business Context
+- Detect fraud accurately while balancing false positives and negatives.
+- Integrate geolocation analysis and transaction patterns.
+- Provide actionable business insights based on model predictions.
 
-Fraud detection is crucial in fintech and e-commerce:
+## Business Context
+Fraudulent transactions lead to financial loss and reduce customer trust. Accurate fraud detection is critical for:
 
-Prevents financial losses
+- E-commerce platforms
+- Banking and credit institutions
 
-Maintains trust with customers and financial institutions
+By leveraging machine learning and SHAP explainability, Adey Innovations Inc. can proactively prevent fraud and improve transaction security.
 
-Supports real-time transaction monitoring
+## Datasets
+1. **Fraud_Data.csv** – E-commerce transactions  
+   - Key features: `user_id`, `signup_time`, `purchase_time`, `purchase_value`, `device_id`, `source`, `browser`, `sex`, `age`, `ip_address`, `class`  
 
-The challenge is managing the trade-off between security (catching fraud) and user experience (avoiding false positives).
+2. **creditcard.csv** – Bank credit transactions  
+   - Key features: `Time`, `V1`–`V28` (anonymized), `Amount`, `Class`  
 
-3. Data Description
-E-commerce Dataset (Fraud_Data.csv)
+3. **IpAddress_to_Country.csv** – Maps IP addresses to countries for geolocation analysis
 
-user_id, signup_time, purchase_time, purchase_value, device_id, source, browser, sex, age, ip_address, class (target)
-
-Imbalanced dataset: far fewer fraudulent transactions
-
-Bank Dataset (creditcard.csv)
-
-Time, V1–V28 (PCA features), Amount, Class (target)
-
-Imbalanced dataset, typical for fraud detection
-
-IP-to-Country Mapping (IpAddress_to_Country.csv)
-
-lower_bound_ip_address, upper_bound_ip_address, country
-
-4. Project Structure
+## Project Structure
 fraud-detection/
 ├── data/
-│   ├── raw/                     # Original datasets (ignored in git)
-│   └── processed/               # Cleaned and feature-engineered data
+│ ├── raw/ # Original datasets
+│ └── processed/ # Cleaned and feature-engineered datasets
 ├── notebooks/
-│   ├── eda-fraud-data.ipynb
-│   ├── eda-creditcard.ipynb
-│   ├── feature-engineering.ipynb
-│   ├── modeling.ipynb
-│   └── shap-explainability.ipynb
-├── src/                          # Optional helper scripts
-├── models/                       # Saved trained models
+│ ├── eda-fraud-data.ipynb
+│ ├── eda-creditcard.ipynb
+│ ├── feature-engineering.ipynb
+│ ├── modeling.ipynb
+│ ├── shap-explainability.ipynb
+│ └── README.md
+├── src/ # Reusable scripts and functions
+├── tests/
+├── models/ # Saved model artifacts
+├── scripts/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
 
-5. Key Steps Implemented
+## Key Features Engineered
+- **Time-based features:** `hour_of_day`, `day_of_week`, `time_since_signup`
+- **Transaction frequency & velocity:** Number of transactions per user within a time window
+- **Geolocation-based features:** Country mapping from IP addresses
 
-Data Cleaning & Preprocessing
+## Data Preprocessing
+- Handling missing values
+- Duplicate removal
+- Data type corrections
+- Encoding categorical features
+- Scaling numerical features
+- Handling class imbalance using **SMOTE** for training set
 
-Missing value handling, duplicates removal, data type corrections
+## Modeling
+- **Baseline model:** Logistic Regression
+- **Ensemble model:** XGBoost
+- Hyperparameter tuning (`n_estimators`, `max_depth`, `learning_rate`, `scale_pos_weight`)
+- Evaluation metrics:
+  - F1-Score
+  - AUC-PR
+  - Confusion Matrix
+- Cross-validation with **Stratified K-Folds (k=5)**
 
-Exploratory Data Analysis (EDA)
+## Model Explainability
+- **SHAP analysis:**
+  - Global feature importance
+  - Decision plots for TP, FP, FN
+  - Force plots (interactive) for individual predictions
+- **Business recommendations** derived from top SHAP features
 
-Univariate and bivariate analysis
-
-Class imbalance visualization
-
-Feature Engineering
-
-Time-based features: time_since_signup, hour_of_day, day_of_week
-
-Transaction frequency/velocity
-
-IP-to-country geolocation mapping
-
-Data Transformation
-
-Standard scaling of numeric features
-
-One-hot encoding of categorical features
-
-Class Imbalance Handling
-
-SMOTE applied to training set only
-
-Modeling & Evaluation
-
-Logistic Regression baseline
-
-XGBoost/Random Forest ensemble models
-
-Stratified train-test split and cross-validation
-
-Model Explainability (SHAP)
-
-Global feature importance
-
-Force plots for TP, FP, FN
-
-Decision plots for top features
-
-6. Setup Instructions
-
-Clone the repository:
-
-git clone <your_repo_link>
-cd fraud-detection
-
-
+## How to Run
+1. Clone the repository:
+   ```bash
+   git clone <your-repo-link>
+   cd fraud-detection
 Install dependencies:
 
 pip install -r requirements.txt
 
 
-Launch Jupyter Notebook:
+Open notebooks in Jupyter or VSCode.
 
-jupyter notebook
+Follow the notebook sequence:
 
+eda-fraud-data.ipynb → EDA for Fraud_Data.csv
 
-Open and run the notebooks in order:
+eda-creditcard.ipynb → EDA for creditcard.csv
 
-eda-fraud-data.ipynb
+feature-engineering.ipynb → Feature engineering & preprocessing
 
-eda-creditcard.ipynb
+modeling.ipynb → Model training, evaluation, comparison
 
-feature-engineering.ipynb
+shap-explainability.ipynb → Model explainability & business insights
 
-modeling.ipynb
+References
 
-shap-explainability.ipynb
+Kaggle Credit Card Fraud Dataset
 
-7. Notes
+Kaggle IEEE Fraud Detection
 
-All raw data is excluded from the repository (see .gitignore)
-
-Processed datasets are saved in data/processed/
-
-SMOTE and feature engineering are applied only to training data
-
-SHAP plots require a working JavaScript-enabled notebook kernel
+SHAP Documentation: https://github.com/slundberg/shap
